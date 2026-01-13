@@ -1,0 +1,148 @@
+/* 1. Alapbeállítások és Reset */
+* {
+    box-sizing: border-box; /* Ez biztosítja, hogy a padding ne növelje a szélességet */
+    font-family: 'Arial', sans-serif; /* Olvashatóbb betűtípus */
+}
+
+body {
+    /* A Discordos linket megtartottam, de érdemes lenne letölteni a képet helyibe, ha a link lejár */
+    background-image: url("képek/Hatter.jpg");
+    background-size: 20vw;
+    background-attachment: fixed; /* Hogy a háttér ne mozogjon görgetéskor */
+    margin: 0;
+    padding: 20px 0;
+}
+
+/* 2. Fő konténer */
+.content {
+    width: 90%; /* Mobilon legyen szélesebb */
+    max-width: 800px; /* PC-n ne legyen túl széles */
+    margin: 0 auto; /* Középre igazítás */
+    
+    background-color: rgba(255, 255, 255, 0.95); /* Enyhén áttetsző fehér */
+    border: 1px solid #ccc;
+    border-radius: 15px; /* Lekerekített sarkok */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* Szép árnyék */
+    padding: 3vw;
+}
+
+/* 3. Szövegek és Címsorok */
+h1, h2, h6 {
+    text-align: center;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h6 { font-size: 1rem; color: #666; margin-bottom: 30px; }
+
+/* 4. Input mezők */
+input[type='text'], input[type='button'], input[type="number"] {
+    width: 100%; /* A box-sizing miatt ez most már biztonságos */
+    padding: 10px;
+    margin: 5px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+input[type='text']:focus {
+    border-color: #333; /* Fókuszkor sötétebb keret */
+    outline: none;
+}
+
+input[type='button'] {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+input[type='button']:hover {
+    background-color: #555;
+}
+
+/* 5. Játékosok és Ponttábla */
+.jatekosokSzama {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* column-gap és row-gap helyett modern gap */
+    padding: 10px;
+}
+
+.jatekosFo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%; /* Hagyunk egy kis helyet a gap-nek */
+}
+
+.szamIMG {
+    width: 100%;
+    max-width: 80px;
+    height: auto;
+    display: block;
+}
+
+/* 6. Pontozó rács (Grid) - Ez a lényeges változás a szépségért */
+.pontokDiv {
+    display: grid;
+    /* 5 oszlopos rács (1-20 számokhoz tökéletes) */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 5px; /* Távolság a gombok között */
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.pontDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    aspect-ratio: 1 / 1; /* Négyzet alakú gombok */
+    min-height: 40px;    /* Minimum magasság */
+    
+    background-color: white;
+    border: 1px solid #333;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease; /* Finom animáció kattintáskor/hoverkor */
+    user-select: none; /* Ne lehessen kijelölni a szöveget dupla kattintásnál */
+}
+
+/* Hover effekt (amikor ráviszed az egeret) */
+.pontDiv:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.05); /* Picit megnő */
+}
+
+/* 7. Az aktív/kiválasztott állapot (A JS kódhoz igazítva) */
+.pontDiv.kivalasztva {
+    background-color: #222; /* Majdnem fekete */
+    color: white;
+    border-color: #222;
+    transform: scale(0.95); /* Picit összemegy, jelezve a benyomást */
+}
+
+/* 8. Mobil nézet igazítások (opcionális, de hasznos) */
+@media (max-width: 600px) {
+    .content {
+        width: 95%;
+        padding: 10px;
+    }
+    
+    .pontokDiv {
+        gap: 2px; /* Kisebb hely mobilon */
+    }
+    
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+}
