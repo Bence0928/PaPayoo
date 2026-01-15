@@ -1,148 +1,245 @@
-/* 1. Alapbeállítások és Reset */
+/* --- style.css --- */
+
+/* Google Font betöltése */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+:root {
+    --primary-color: #4a90e2; 
+    --accent-color: #2c3e50;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
 * {
-    box-sizing: border-box; /* Ez biztosítja, hogy a padding ne növelje a szélességet */
-    font-family: 'Arial', sans-serif; /* Olvashatóbb betűtípus */
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    /* A Discordos linket megtartottam, de érdemes lenne letölteni a képet helyibe, ha a link lejár */
-    background-image: url("képek/Hatter.jpg");
-    background-size: 20vw;
-    background-attachment: fixed; /* Hogy a háttér ne mozogjon görgetéskor */
+    background-image: url("képek/Hatter.jpg"); /* Ellenőrizd az elérési utat! */
+    background-color: #e0eafc; /* Tartalék szín, ha nincs kép */
+    background-position: center;
+    background-attachment: fixed;
     margin: 0;
     padding: 20px 0;
+    min-height: 100vh;
 }
 
-/* 2. Fő konténer */
+/* Fő konténer - Üveghatás */
 .content {
-    width: 90%; /* Mobilon legyen szélesebb */
-    max-width: 800px; /* PC-n ne legyen túl széles */
-    margin: 0 auto; /* Középre igazítás */
-    
-    background-color: rgba(255, 255, 255, 0.95); /* Enyhén áttetsző fehér */
-    border: 1px solid #ccc;
-    border-radius: 15px; /* Lekerekített sarkok */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2); /* Szép árnyék */
-    padding: 3vw;
+    width: 90%;
+    max-width: 850px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 40px;
+    transition: all 0.3s ease;
 }
 
-/* 3. Szövegek és Címsorok */
-h1, h2, h6 {
+/* Címsorok */
+h1 { 
+    font-size: 2.2rem; 
+    font-weight: 600;
     text-align: center;
-    color: #333;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, var(--accent-color), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 30px;
 }
 
-h1 { font-size: 2rem; }
-h2 { font-size: 1.5rem; }
-h6 { font-size: 1rem; color: #666; margin-bottom: 30px; }
-
-/* 4. Input mezők */
-input[type='text'], input[type='button'], input[type="number"] {
-    width: 100%; /* A box-sizing miatt ez most már biztonságos */
-    padding: 10px;
-    margin: 5px 0;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    font-size: 1.2rem;
+h2 { 
+    font-size: 1.4rem; 
     text-align: center;
-    transition: border-color 0.3s;
+    color: var(--accent-color); 
 }
 
-input[type='text']:focus {
-    border-color: #333; /* Fókuszkor sötétebb keret */
+hr { border: 0; height: 1px; background: rgba(0,0,0,0.1); margin: 30px 0; }
+
+/* Input mezők */
+input[type='text'], input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid transparent;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+input[type='text']:focus, input[type="number"]:focus {
+    border-color: var(--primary-color);
     outline: none;
 }
 
+/* Gombok */
 input[type='button'] {
-    background-color: #333;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--accent-color), #4b6cb7);
     color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
     cursor: pointer;
-    font-weight: bold;
-    margin-top: 15px;
+    margin-top: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
 }
 
 input[type='button']:hover {
-    background-color: #555;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
-/* 5. Játékosok és Ponttábla */
+/* --- NYITÓOLDAL (Kártyák) --- */
 .jatekosokSzama {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px; /* column-gap és row-gap helyett modern gap */
-    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    justify-items: center;
 }
 
 .jatekosFo {
+    background: rgba(255, 255, 255, 0.6);
+    width: 100%;
+    max-width: 150px;
+    aspect-ratio: 1 / 1;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 30%; /* Hagyunk egy kis helyet a gap-nek */
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .szamIMG {
-    width: 100%;
-    max-width: 80px;
+    width: 60%;
     height: auto;
-    display: block;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2));
 }
 
-/* 6. Pontozó rács (Grid) - Ez a lényeges változás a szépségért */
+.jatekosFo:hover {
+    background: white;
+    transform: translateY(-10px) scale(1.05);
+    border: 2px solid var(--primary-color);
+}
+
+/* --- JÁTÉK OLDAL --- */
+[class^="jatekos"] {
+    background: rgba(255,255,255,0.5);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
 .pontokDiv {
     display: grid;
-    /* 5 oszlopos rács (1-20 számokhoz tökéletes) */
     grid-template-columns: repeat(5, 1fr); 
-    gap: 5px; /* Távolság a gombok között */
-    margin-top: 10px;
-    padding: 10px;
+    gap: 8px;
+    margin: 15px 0;
 }
 
 .pontDiv {
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    aspect-ratio: 1 / 1; /* Négyzet alakú gombok */
-    min-height: 40px;    /* Minimum magasság */
-    
+    aspect-ratio: 1 / 1;
     background-color: white;
-    border: 1px solid #333;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    color: var(--accent-color);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease; /* Finom animáció kattintáskor/hoverkor */
-    user-select: none; /* Ne lehessen kijelölni a szöveget dupla kattintásnál */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.2s;
 }
 
-/* Hover effekt (amikor ráviszed az egeret) */
-.pontDiv:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.05); /* Picit megnő */
-}
+.pontDiv:hover { transform: translateY(-3px); }
 
-/* 7. Az aktív/kiválasztott állapot (A JS kódhoz igazítva) */
 .pontDiv.kivalasztva {
-    background-color: #222; /* Majdnem fekete */
+    background-color: var(--success-color);
     color: white;
-    border-color: #222;
-    transform: scale(0.95); /* Picit összemegy, jelezve a benyomást */
+    transform: scale(0.95);
+    box-shadow: inset 0 3px 5px rgba(0,0,0,0.2);
 }
 
-/* 8. Mobil nézet igazítások (opcionális, de hasznos) */
+/* 21. gomb (vagy utolsó) kiemelése */
+.pontDiv:last-child {
+    border: 2px solid var(--accent-color);
+}
+
+/* Vesztes animációk */
+@keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+.roundLoser {
+    border: 2px solid var(--danger-color);
+    background-color: rgba(231, 76, 60, 0.1) !important;
+    animation: pulseRed 2s infinite;
+}
+
+.missingName{
+    border: 2px solid var(--danger-color);
+    animation: pulseRed 2s infinite;
+}
+
+.gameLoser {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b) !important;
+    color: white !important;
+    transform: scale(1.02);
+}
+
+.pontszam-kijelzo, .osszpontszam-kijelzo {
+    text-align: center;
+    margin: 5px 0;
+}
+.osszpontszam-kijelzo {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+.jatekos-nev-cim {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    text-shadow: none !important;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 3rem;
+    z-index: 10; /* Hogy biztosan minden felett legyen */
+    position: relative;
+}
+.errorOutput {
+    display: none; /* Alapból rejtve van */
+    background-color: #fadbd8;
+    color: #721c24;
+    border: 1px solid #e74c3c;
+    padding: 10px;
+    margin: 10px auto; /* Középre igazítva */
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Mobil nézet */
 @media (max-width: 600px) {
-    .content {
-        width: 95%;
-        padding: 10px;
-    }
-    
-    .pontokDiv {
-        gap: 2px; /* Kisebb hely mobilon */
-    }
-    
-    h1 { font-size: 1.5rem; }
-    h2 { font-size: 1.2rem; }
+    .content { width: 95%; padding: 20px; }
+    h1 { font-size: 1.8rem; }
+    .pontokDiv { gap: 4px; }
+    .pontDiv { font-size: 0.9rem; border-radius: 8px; }
 }
